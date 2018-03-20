@@ -1,0 +1,72 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using class_operation;
+using class_property;
+
+namespace WebApplication1
+{
+    public partial class view_page : System.Web.UI.Page
+    {
+
+        oper obj = new oper();
+
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!Page.IsPostBack)
+            {
+                showdata();
+            }
+        }
+
+
+
+        public void showdata()
+        {
+            GridView1.DataSource = obj.view();
+            GridView1.DataBind();
+        }
+
+        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName.Equals("del"))
+            {
+                int id = Convert.ToInt32(e.CommandArgument);
+                int rowaff = obj.Delete(id);
+                if (rowaff > 0)
+                {
+                    Response.Write("<script>alert('Deleted successfully')</script>");
+                    showdata();
+
+                }
+
+                else
+                    Response.Write("<script>alert('ERROR')</script>");
+
+            }
+        }
+
+        protected void GridView1_RowCommand1(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName.Equals("del"))
+            {
+                int id = Convert.ToInt32(e.CommandArgument);
+                int rowaff = obj.Delete(id);
+                if (rowaff > 0)
+                {
+                    Response.Write("<script>alert('Deleted successfully')</script>");
+                    showdata();
+
+                }
+
+                else
+                    Response.Write("<script>alert('ERROR')</script>");
+
+            }
+        }
+    }
+}
