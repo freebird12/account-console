@@ -1,0 +1,117 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using class_property;
+using System.Data.SqlClient;
+using System.Data;
+
+namespace class_operation
+{
+    public class oper
+    {
+        int cust_id;
+        string cust_name;
+        int deposit;
+        DateTime sdate;
+        string type;
+        string status;
+
+        public int add_acc(details obj)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection("server=intvmsql01;user id=PJ09TMS101_1718;password=tcstvm;database=DB09TMS101_1718");
+                con.Open();
+
+                SqlCommand cmd = new SqlCommand("add_acc5", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@cid", obj.Cust_id);
+                cmd.Parameters.AddWithValue("@bal", obj.Deposit);
+                cmd.Parameters.AddWithValue("@sdate", obj.Sdate);
+                cmd.Parameters.AddWithValue("@atype", obj.Type);
+                cmd.Parameters.AddWithValue("@astatus", obj.Status);
+
+                cmd.Parameters.AddWithValue("@aid", 0);
+                cmd.Parameters["@aid"].Direction = ParameterDirection.Output;
+
+                int rowaffected = cmd.ExecuteNonQuery();
+
+                if (rowaffected > 0)
+                {
+                    int acc_id = Convert.ToInt32(cmd.Parameters["@aid"].Value);
+                    return acc_id;
+                }
+                else
+
+                    return 0;
+            }
+            catch (Exception E)
+            {
+                throw E;
+            }
+
+            
+        }
+
+
+
+
+
+
+        public List<details> view()
+        {
+            SqlConnection con = new SqlConnection("server=intvmsql01;user id=PJ09TMS101_1718;password=tcstvm;database=DB09TMS101_1718");
+            con.Open();
+
+            SqlCommand cmd = new SqlCommand("view_proc1", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataReader rowread = cmd.ExecuteReader();
+            List<details> viewlist = new List<details>();
+            while (rowread.Read())
+            {
+                details acobj = new details();
+                acobj.Cust_id = Convert.ToInt32(rowread["cust_id"]);
+                acobj.Account_id= Convert.ToInt32(rowread["aid"]);
+                acobj.Cust_name = rowread["name"].ToString();
+                acobj.Deposit = Convert.ToInt32(rowread["bal"]);
+                acobj.Sdate = Convert.ToDateTime(rowread["sdate"]);
+                acobj.Type = rowread["atype"].ToString();
+                acobj.Status = rowread["astatus"].ToString();
+                viewlist.Add(acobj);
+
+
+            }
+            return viewlist;
+        }
+
+
+
+        public int Delete(int id)
+        {
+            //1. open sqlconnection
+            SqlConnection con = new SqlConnection("server=intvmsql01;user id=PJ09TMS101_1718;password=tcstvm;database=DB09TMS101_1718");
+            con.Open();
+
+            SqlCommand cmd = new SqlCommand("account_del", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@aid", id);
+
+            int rowaffected = cmd.ExecuteNonQuery();
+            return rowaffected;
+        }
+
+
+
+
+
+
+
+
+
+
+
+    }
+}
