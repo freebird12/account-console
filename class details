@@ -1,0 +1,139 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace class_property
+{
+    public class details
+    {
+        int account_id;
+        int cust_id;
+        string cust_name;
+        int deposit;
+        DateTime sdate;
+        string type;
+        string status;
+
+
+        //********************************************
+        public int Account_id
+        {
+            get
+            {
+                return account_id;
+            }
+
+            set
+            {
+                account_id = value;
+            }
+        }
+
+        //********************************************
+
+        public int Cust_id
+        {
+            get
+            {
+                return cust_id;
+            }
+
+            set
+            {
+                cust_id = value;
+            }
+        }
+
+
+        //********************************************
+        public string Cust_name
+        {
+            get
+            {
+                return cust_name;
+            }
+
+            set
+            {
+                cust_name = value;
+            }
+        }
+
+
+        //********************************************
+        public int Deposit
+        {
+            get
+            {
+                return deposit;
+            }
+
+            set
+            {
+                deposit = value;
+            }
+        }
+
+
+        //********************************************
+        public DateTime Sdate
+        {
+            get
+            {
+                return sdate;
+            }
+
+            set
+            {
+                sdate = value;
+            }
+        }
+
+
+        //********************************************
+        public string Type
+        {
+            get
+            {
+                return type;
+            }
+
+            set
+            {
+                type = value;
+            }
+        }
+
+
+        //********************************************
+        public string Status
+        {
+            get
+            {
+                return status;
+            }
+
+            set
+            {
+                status = value;
+            }
+        }
+
+        public details()
+        { }
+
+        public details(/*int account_id, string cust_name,*/ int cust_id, int deposit, DateTime sdate, string type, string status)
+        {
+            /*this.account_id = account_id;
+            
+            this.cust_name = cust_name;*/
+            this.cust_id = cust_id;
+            this.deposit = deposit;
+            this.sdate = DateTime.Now;
+            this.type = type;
+            this.status = status;
+        }
+    }
+}
